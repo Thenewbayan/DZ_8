@@ -44,35 +44,68 @@ void PrintMatrix(int[,] matrix)
         Console.WriteLine();
     }
 }
+/// <summary>
+/// Сортировка значений матрицы в каждой строке по возрастанию
+/// </summary>
+/// <param name="matr">исх матрица</param>
 void ToSortRowsMinToMax(int[,] matr)
 {
-    
+    int tepm;
     for (int i = 0; i < matr.GetLength(0); i++)
     {
         for (int j = 0; j < matr.GetLength(1); j++)
         {
-            int temp=matr[0,0];
-            if (matr[i,j] < temp)
+            for (int k=j+1; k<matr.GetLength(1);k++)
             {
-                matr[i, j-1] = matr[i, j];
-                matr[i, j]=temp;
-                temp=matr[i,j];            
-            }          
-        }  
-        // int temp2=matr[0,0];
-        // for (int j = 0; j < matr.GetLength(1); j++)
-        // {
-        //     if (matr[i,j] < temp2)
-        //     {
-        //         matr[i, j-1] = matr[i, j];
-        //         matr[i, j]=temp2;
-        //         temp2=matr[i,j];            
-        //    }          
-        // }  
-    }
+                if (matr[i,j]>matr[i,k])
+                {
+                    tepm=matr[i,j];
+                    matr[i,j]=matr[i,k];
+                    matr[i,k]=tepm;
+                }
+            }
+        }
+    }   
 }
-int[,] resultMatr = GetArray(1, 5, 0, 10);
+/// <summary>
+/// Сортировка значений матрицы в каждой строке по убыванию
+/// </summary>
+/// <param name="matr">исх матрица</param>
+void ToSortRowsMaxToMin(int[,] matr)
+{
+    int tepm;
+    for (int i = 0; i < matr.GetLength(0); i++)
+    {
+        for (int j = 0; j < matr.GetLength(1); j++)
+        {
+            for (int k=j+1; k<matr.GetLength(1);k++)
+            {
+                if (matr[i,j]<matr[i,k])
+                {
+                    tepm=matr[i,j];
+                    matr[i,j]=matr[i,k];
+                    matr[i,k]=tepm;
+                }
+            }
+        }
+    }   
+}
+Console.WriteLine("Зададим матрицу и отсутрируем значения в каждой из строк по возрастанию и убыванию");
+Console.WriteLine("Задайте количество строк и столбцов через  ENTER");
+int userRows=Convert.ToInt32(Console.ReadLine());
+int userCols=Convert.ToInt32(Console.ReadLine());
+Console.WriteLine("Задайте мин и макс значения для записи в строки и сортировки через  ENTER");
+int minUserValue=Convert.ToInt32(Console.ReadLine());
+int maxUserValue=Convert.ToInt32(Console.ReadLine());
+int[,] resultMatr = GetArray(userRows, userCols, minUserValue, maxUserValue);
+Console.WriteLine();
+Console.WriteLine("Исходная матрица выглядит вот так:");
 PrintMatrix(resultMatr);
 Console.WriteLine();
+Console.WriteLine("Отсортированная по возрастанию матрица выглядит вот так:");
 ToSortRowsMinToMax(resultMatr);
+PrintMatrix(resultMatr);
+Console.WriteLine();
+Console.WriteLine("Отсортированная по убыванию матрица выглядит вот так:");
+ToSortRowsMaxToMin(resultMatr);
 PrintMatrix(resultMatr);
